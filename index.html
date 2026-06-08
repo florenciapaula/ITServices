@@ -2,7 +2,9 @@
 <html lang="es-AR">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Florencia Martínez | Salesforce & IT Solutions</title>
   <meta name="description" content="Soporte Salesforce, análisis funcional, automatizaciones, reportes, integraciones y soluciones IT para empresas." />
 
@@ -79,7 +81,6 @@
     .brand strong {
       color: var(--ink);
       font-size: 1rem;
-      letter-spacing: 0;
     }
 
     .brand span {
@@ -102,8 +103,7 @@
       font-weight: 800;
     }
 
-    .nav-links a:hover,
-    .nav-links a:focus-visible {
+    .nav-links a:hover {
       color: var(--primary);
     }
 
@@ -159,7 +159,6 @@
       line-height: 0.98;
       margin-bottom: 1.2rem;
       max-width: 780px;
-      letter-spacing: 0;
     }
 
     .hero p {
@@ -273,7 +272,6 @@
       font-size: clamp(1.75rem, 3.4vw, 2.6rem);
       line-height: 1.08;
       margin-bottom: 0.8rem;
-      letter-spacing: 0;
     }
 
     .section-title p,
@@ -287,6 +285,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.65rem;
+      margin-top: 1rem;
     }
 
     .chip {
@@ -665,10 +664,12 @@
               <strong>Admin</strong>
               <span>Configuración, permisos, objetos, campos y Flows.</span>
             </div>
+
             <div class="proof-item">
               <strong>Datos</strong>
               <span>Reportes, dashboards, cargas masivas y limpieza.</span>
             </div>
+
             <div class="proof-item">
               <strong>Soporte</strong>
               <span>Acompañamiento funcional y resolución de issues.</span>
@@ -786,11 +787,15 @@
         <div class="contact-info">
           <p class="section-kicker">Contacto</p>
           <h2>Contame qué necesitás resolver.</h2>
+
           <p>
-            Completá el formulario y elegí si preferís enviarlo por WhatsApp o por mail. Te respondo con una primera orientación y los próximos pasos posibles.
+            Completá el formulario y la consulta se registrará directamente en Salesforce como un nuevo Lead.
           </p>
 
-          <a class="contact-link" href="mailto:florenciapaulamartinez@gmail.com">florenciapaulamartinez@gmail.com</a>
+          <a class="contact-link" href="mailto:florenciapaulamartinez@gmail.com">
+            florenciapaulamartinez@gmail.com
+          </a>
+
           <a
             class="contact-link"
             href="https://wa.me/5491123963809"
@@ -805,65 +810,147 @@
           </p>
         </div>
 
-        <form id="contactForm">
+        <!-- FORMULARIO WEB-TO-LEAD SALESFORCE -->
+        <form
+          action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dal00001Sn7m5"
+          method="POST"
+        >
+          <input type="hidden" name="oid" value="00Dal00001Sn7m5" />
+          <input type="hidden" name="retURL" value="https://florenciapaula.github.io/ITServices/" />
+
+          <!-- Origen del Lead -->
+          <input type="hidden" id="lead_source" name="lead_source" value="Web" />
+
+          <!-- 
+          Campos opcionales de debug. Descomentar solo para pruebas.
+
+          <input type="hidden" name="debug" value="1" />
+          <input type="hidden" name="debugEmail" value="florenciapaulamartinez@gmail.com" />
+          -->
+
           <p class="form-help">
             Los campos necesarios me ayudan a responder con contexto y evitar ida y vuelta innecesaria.
           </p>
 
           <div class="form-row">
             <div class="field">
-              <label for="name">Nombre</label>
-              <input type="text" id="name" name="name" autocomplete="name" required />
+              <label for="first_name">Nombre</label>
+              <input
+                id="first_name"
+                maxlength="40"
+                name="first_name"
+                type="text"
+                autocomplete="given-name"
+                required
+              />
             </div>
 
             <div class="field">
-              <label for="company">Empresa / Proyecto</label>
-              <input type="text" id="company" name="company" autocomplete="organization" />
+              <label for="last_name">Apellido</label>
+              <input
+                id="last_name"
+                maxlength="80"
+                name="last_name"
+                type="text"
+                autocomplete="family-name"
+                required
+              />
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" autocomplete="email" required />
+              <label for="email">Correo electrónico</label>
+              <input
+                id="email"
+                maxlength="80"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+              />
             </div>
 
             <div class="field">
               <label for="phone">Teléfono / WhatsApp</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" />
+              <input
+                id="phone"
+                maxlength="40"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="company">Empresa / Proyecto</label>
+              <input
+                id="company"
+                maxlength="40"
+                name="company"
+                type="text"
+                autocomplete="organization"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="title">Cargo</label>
+              <input
+                id="title"
+                maxlength="40"
+                name="title"
+                type="text"
+                autocomplete="organization-title"
+                placeholder="Ej: CEO, Founder, Manager"
+              />
             </div>
           </div>
 
           <div class="field">
-            <label for="service">Servicio de interés</label>
-            <select id="service" name="service" required>
+            <label for="url">Sitio web</label>
+            <input
+              id="url"
+              maxlength="80"
+              name="url"
+              type="url"
+              autocomplete="url"
+              placeholder="https://www.ejemplo.com"
+            />
+          </div>
+
+          <div class="field">
+            <label for="00Nal00001KVTRg">Servicio de interés</label>
+            <select id="00Nal00001KVTRg" name="00Nal00001KVTRg" required>
               <option value="">Seleccionar una opción</option>
-              <option value="Salesforce Admin">Salesforce Admin</option>
+              <option value="Salesforce Admin">Salesforce Administrator</option>
               <option value="Soporte funcional">Soporte funcional</option>
               <option value="Automatizaciones">Automatizaciones</option>
               <option value="Reportes y dashboards">Reportes y dashboards</option>
               <option value="Integraciones o carga de datos">Integraciones o carga de datos</option>
               <option value="Desarrollo Salesforce">Desarrollo Salesforce</option>
+              <option value="Landing page / sitio web">Landing page / sitio web</option>
               <option value="Otro">Otro</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="message">Mensaje</label>
-            <textarea id="message" name="message" required placeholder="Contame brevemente qué necesitás resolver, qué sistema usás hoy o qué objetivo querés lograr."></textarea>
-          </div>
-
-          <div class="field">
-            <label for="sendMethod">Quiero enviar la consulta por</label>
-            <select id="sendMethod" name="sendMethod" required>
-              <option value="whatsapp">WhatsApp</option>
-              <option value="email">Email</option>
-            </select>
+            <label for="description">Mensaje</label>
+            <textarea
+              id="description"
+              name="description"
+              maxlength="32000"
+              rows="6"
+              required
+              placeholder="Contame brevemente qué necesitás resolver, qué sistema usás hoy o qué objetivo querés lograr."
+            ></textarea>
           </div>
 
           <div class="submit-row">
             <button class="btn btn-primary" type="submit">Enviar consulta</button>
-            <span class="privacy-note">Se abrirá WhatsApp o tu app de mail para confirmar el envío.</span>
+            <span class="privacy-note"></span>
           </div>
         </form>
       </div>
@@ -884,47 +971,5 @@
   >
     WhatsApp
   </a>
-
-  <script>
-    const form = document.getElementById("contactForm");
-
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const company = document.getElementById("company").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const service = document.getElementById("service").value;
-      const message = document.getElementById("message").value.trim();
-      const sendMethod = document.getElementById("sendMethod").value;
-
-      const text = `
-Hola Florencia, quiero consultarte por tus servicios.
-
-Nombre: ${name}
-Empresa / Proyecto: ${company || "No informado"}
-Email: ${email}
-Teléfono / WhatsApp: ${phone || "No informado"}
-Servicio de interés: ${service}
-
-Mensaje:
-${message}
-      `.trim();
-
-      if (sendMethod === "whatsapp") {
-        const whatsappNumber = "5491123963809";
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-        window.open(whatsappUrl, "_blank");
-      }
-
-      if (sendMethod === "email") {
-        const emailTo = "florenciapaulamartinez@gmail.com";
-        const subject = `Consulta por servicios - ${name}`;
-        const mailtoUrl = `mailto:${emailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
-        window.location.href = mailtoUrl;
-      }
-    });
-  </script>
 </body>
 </html>
