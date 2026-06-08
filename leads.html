@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulta | Florencia Martínez</title>
+  <meta name="description" content="Formulario de contacto para servicios Salesforce, análisis funcional, automatizaciones, reportes, integraciones y soluciones IT." />
+
+  <style>
+    :root {
+      --primary: #0f6f8f;
+      --primary-dark: #08374d;
+      --accent: #18a999;
+      --accent-light: #b9f6ef;
+      --ink: #111827;
+      --text: #334155;
+      --muted: #64748b;
+      --soft: #eef7f8;
+      --bg: #f7fbfc;
+      --card: #ffffff;
+      --border: #dbe4ea;
+      --error: #b42318;
+      --shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(24, 169, 153, 0.24), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(15, 111, 143, 0.20), transparent 36%),
+        linear-gradient(135deg, #f7fbfc 0%, #eef7f8 48%, #ffffff 100%);
+      line-height: 1.6;
+    }
+
+    .page {
+      width: min(1160px, calc(100% - 32px));
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 42px 0;
+      display: grid;
+      align-items: center;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .intro,
+    .form-card {
+      border: 1px solid rgba(219, 228, 234, 0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .intro {
+      position: relative;
+      min-height: 620px;
+      padding: 36px;
+      color: #ffffff;
+      background:
+        linear-gradient(145deg, rgba(8, 55, 77, 0.96), rgba(15, 111, 143, 0.86)),
+        url("hero-salesforce-it.png") center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .intro::after {
+      content: "";
+      position: absolute;
+      inset: auto -90px -120px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      background: rgba(185, 246, 239, 0.16);
+    }
+
+    .brand {
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--accent-light);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-badge::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(24, 169, 153, 0.16);
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: clamp(2.15rem, 4.2vw, 4.6rem);
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      max-width: 520px;
+      margin-bottom: 18px;
+    }
+
+    .intro-text {
+      max-width: 520px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 1.05rem;
+    }
+
+    .proof {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 36px;
+    }
+
+    .proof-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(14px);
+    }
+
+    .proof-icon {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(185, 246, 239, 0.16);
+      color: var(--accent-light);
+      font-weight: 950;
+    }
+
+    .proof-item strong {
+      display: block;
+      color: #ffffff;
+      font-size: 0.98rem;
+      margin-bottom: 2px;
+    }
+
+    .proof-item span {
+      display: block;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .contact-links {
+      position: relative;
+      z-index: 1;
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.94rem;
+    }
+
+    .contact-links a {
+      color: var(--accent-light);
+      font-weight: 850;
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      padding: 34px;
+    }
+
+    .form-header {
+      margin-bottom: 24px;
+    }
+
+    .form-kicker {
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .form-header h2 {
+      color: var(--ink);
+      font-size: clamp(1.65rem, 3vw, 2.35rem);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      margin-bottom: 10px;
+    }
+
+    .form-header p {
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    label {
+      color: var(--ink);
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: -2px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.92rem 1rem;
+      font: inherit;
+      background: #ffffff;
+      color: var(--text);
+      box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: rgba(15, 111, 143, 0.45);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(24, 169, 153, 0.16);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    textarea {
+      min-height: 148px;
+      resize: vertical;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--primary-dark) 50%),
+        linear-gradient(135deg, var(--primary-dark) 50%, transparent 50%);
+      background-position:
+        calc(100% - 21px) calc(50% + 1px),
+        calc(100% - 16px) calc(50% + 1px);
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 2.8rem;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+      padding-top: 6px;
+    }
+
+    .btn-submit {
+      border: none;
+      min-height: 52px;
+      padding: 0.9rem 1.25rem;
+      border-radius: 16px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 950;
+      color: #05272d;
+      background: linear-gradient(135deg, var(--accent), #44d3c3);
+      box-shadow: 0 16px 28px rgba(24, 169, 153, 0.24);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 34px rgba(24, 169, 153, 0.30);
+      filter: saturate(1.04);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .privacy-note {
+      color: var(--muted);
+      font-size: 0.84rem;
+      max-width: 330px;
+    }
+
+    .required-note {
+      color: var(--muted);
+      font-size: 0.82rem;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--soft);
+      border: 1px solid rgba(15, 111, 143, 0.10);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.86rem 1rem;
+      border-radius: 999px;
+      background: #25d366;
+      color: #062b19;
+      text-decoration: none;
+      font-weight: 950;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.20);
+      z-index: 10;
+    }
+
+    .whatsapp-float::before {
+      content: "●";
+      font-size: 0.7rem;
+    }
+
+    @media (max-width: 960px) {
+      .page {
+        padding: 24px 0 92px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        min-height: auto;
+        padding: 30px;
+      }
+
+      .proof {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100% - 24px, 1160px);
+        padding-top: 14px;
+      }
+
+      .intro,
+      .form-card {
+        border-radius: 20px;
+      }
+
+      .intro,
+      .form-card {
+        padding: 22px;
+      }
+
+      .form-row,
+      .proof {
+        grid-template-columns: 1fr;
+      }
+
+      .submit-row,
+      .btn-submit {
+        width: 100%;
+      }
+
+      .btn-submit {
+        justify-content: center;
+      }
+
+      .privacy-note {
+        max-width: none;
+        text-align: center;
+      }
+
+      .whatsapp-float {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="layout">
+      <section class="intro" aria-label="Presentación de servicios">
+        <div class="brand">
+          <div class="brand-badge">Salesforce & IT Solutions</div>
+
+          <h1>Contame qué necesitás resolver.</h1>
+
+          <p class="intro-text">
+            Te ayudo con Salesforce, procesos, automatizaciones, reportes, integraciones y soporte funcional para que tu operación sea más clara, simple y eficiente.
+          </p>
+        </div>
+
+        <div>
+          <div class="proof" aria-label="Beneficios principales">
+            <div class="proof-item">
+              <div class="proof-icon">SF</div>
+              <div>
+                <strong>Salesforce Admin</strong>
+                <span>Configuración, permisos, objetos, campos, layouts y Flows.</span>
+              </div>
+            </div>
+
+            <div class="proof-item">
+              <div class="proof-icon">BI</div>
+              <div>
+                <strong>Datos y reportes</strong>
+                <span>Dashboards, KPIs, cargas masivas, limpieza y análisis.</span>
+              </div>
+            </div>
+
+            <div class="proof-item">
+              <div class="proof-icon">UX</div>
+              <div>
+                <strong>Análisis funcional</strong>
+                <span>Relevamiento, documentación, testing y soporte a usuarios.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-links">
+            <a href="mailto:florenciapaulamartinez@gmail.com">florenciapaulamartinez@gmail.com</a>
+            <a href="https://wa.me/5491123963809" target="_blank" rel="noopener noreferrer">WhatsApp: +54 9 11 2396-3809</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-card" aria-label="Formulario de contacto">
+        <div class="form-header">
+          <p class="form-kicker">Nueva consulta</p>
+          <h2>Solicitá una primera orientación</h2>
+          <p>
+            Completá el formulario y la consulta se registrará directamente en Salesforce como un nuevo Lead.
+          </p>
+        </div>
+
+        <form
+          action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dal00001Sn7m5"
+          method="POST"
+        >
+          <input type="hidden" name="oid" value="00Dal00001Sn7m5" />
+          <input type="hidden" name="retURL" value="https://florenciapaula.github.io/ITServices/" />
+          <input type="hidden" id="lead_source" name="lead_source" value="Web" />
+
+          <!--
+          Campos opcionales de debug. Descomentar solo para pruebas.
+          <input type="hidden" name="debug" value="1" />
+          <input type="hidden" name="debugEmail" value="florenciapaulamartinez@gmail.com" />
+          -->
+
+          <p class="required-note">Los campos marcados como obligatorios ayudan a crear el lead correctamente en Salesforce.</p>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="first_name">Nombre *</label>
+              <input
+                id="first_name"
+                maxlength="40"
+                name="first_name"
+                type="text"
+                autocomplete="given-name"
+                placeholder="Ej: Ana"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="last_name">Apellido *</label>
+              <input
+                id="last_name"
+                maxlength="80"
+                name="last_name"
+                type="text"
+                autocomplete="family-name"
+                placeholder="Ej: García"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="email">Correo electrónico *</label>
+              <input
+                id="email"
+                maxlength="80"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="nombre@empresa.com"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="phone">Teléfono / WhatsApp</label>
+              <input
+                id="phone"
+                maxlength="40"
+                name="phone"
+                type="tel"
+                autocomplete="tel"
+                placeholder="+54 9 11..."
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="company">Empresa / Proyecto *</label>
+              <input
+                id="company"
+                maxlength="40"
+                name="company"
+                type="text"
+                autocomplete="organization"
+                placeholder="Nombre de la empresa o proyecto"
+                required
+              />
+              <span class="hint">Si no aplica, podés indicar “Particular”.</span>
+            </div>
+
+            <div class="field">
+              <label for="title">Cargo</label>
+              <input
+                id="title"
+                maxlength="40"
+                name="title"
+                type="text"
+                autocomplete="organization-title"
+                placeholder="Ej: Founder, CEO, Manager"
+              />
+            </div>
+          </div>
+
+          <div class="field full-width">
+            <label for="url">Sitio web</label>
+            <input
+              id="url"
+              maxlength="80"
+              name="url"
+              type="url"
+              autocomplete="url"
+              placeholder="https://www.ejemplo.com"
+            />
+          </div>
+
+          <div class="field full-width">
+            <label for="00Nal00001KVTRg">Servicio de interés *</label>
+            <select id="00Nal00001KVTRg" name="00Nal00001KVTRg" required>
+              <option value="">Seleccionar una opción</option>
+              <option value="Salesforce Admin">Salesforce Admin</option>
+              <option value="Soporte funcional">Soporte funcional</option>
+              <option value="Automatizaciones">Automatizaciones</option>
+              <option value="Reportes y dashboards">Reportes y dashboards</option>
+              <option value="Integraciones o carga de datos">Integraciones o carga de datos</option>
+              <option value="Desarrollo Salesforce">Desarrollo Salesforce</option>
+              <option value="Landing page / sitio web">Landing page / sitio web</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="field full-width">
+            <label for="description">Mensaje *</label>
+            <textarea
+              id="description"
+              name="description"
+              maxlength="32000"
+              rows="6"
+              required
+              placeholder="Contame brevemente qué necesitás resolver, qué sistema usás hoy o qué objetivo querés lograr."
+            ></textarea>
+          </div>
+
+          <div class="submit-row">
+            <button class="btn-submit" type="submit">Enviar consulta</button>
+            <span class="privacy-note">Tu consulta se guardará en Salesforce para poder darle seguimiento.</span>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <a
+    class="whatsapp-float"
+    href="https://wa.me/5491123963809?text=Hola%20Florencia%2C%20quiero%20consultarte%20por%20tus%20servicios."
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    WhatsApp
+  </a>
+</body>
+</html>
