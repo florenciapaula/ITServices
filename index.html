@@ -814,9 +814,9 @@
         <form
           action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dal00001Sn7m5"
           method="POST"
+          target="salesforce_iframe"
         >
           <input type="hidden" name="oid" value="00Dal00001Sn7m5" />
-          <input type="hidden" name="retURL" value="https://florenciapaula.github.io/ITServices/" />
 
           <!-- Origen del Lead -->
           <input type="hidden" id="lead_source" name="lead_source" value="Web" />
@@ -953,6 +953,13 @@
             <span class="privacy-note"></span>
           </div>
         </form>
+
+        <iframe name="salesforce_iframe" style="display:none" aria-hidden="true"></iframe>
+
+        <div id="success-message" style="display:none; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:2rem 1.55rem; box-shadow:var(--shadow); text-align:center;">
+          <p style="font-size:1.25rem; font-weight:900; color:var(--ink); margin-bottom:0.5rem;">¡Mensaje enviado!</p>
+          <p style="color:var(--muted);">Gracias por tu consulta. Te voy a responder a la brevedad.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -971,5 +978,17 @@
   >
     WhatsApp
   </a>
+
+  <script>
+    document.querySelector("form").addEventListener("submit", function () {
+      const form = this;
+      const msg = document.getElementById("success-message");
+      setTimeout(function () {
+        form.style.display = "none";
+        msg.style.display = "block";
+        msg.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 800);
+    });
+  </script>
 </body>
 </html>
